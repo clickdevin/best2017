@@ -24,6 +24,7 @@ SOFTWARE.
 
 typedef struct
 {
+    u8 buttonGroup;
     u8 button;
     void (*function)();
 } bl_params_t;
@@ -31,17 +32,18 @@ typedef struct
 void button_listener(void *params_void)
 {
     bl_params_t *params = (bl_params_t *)params_void;
-    if (digitalRead(params->button))
+    if (joystickGetDigital(1, params->buttonGroup, params->button))
     {
         params->function();
         taskDelay(BTN_DELAY);
     }
 }
 
-void register_button(u8 button, void (*function)())
+void register_button(u8 buttonGroup, u8 button, void (*function)())
 {
     void *params_void = malloc(sizeof(bl_params_t));
     bl_params_t *params = (bl_params_t *)params_void;
+    params->buttonGroup = buttonGroup;
     params->button = button;
     params->function = function;
     taskCreate(

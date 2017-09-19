@@ -25,7 +25,7 @@ SOFTWARE.
 
 #include <API.h>
 
-#define FIRE_BTN        1
+#define FIRE_BTN        5, JOY_DOWN
 #define TURN_AXIS       1
 #define FWD_AXIS        3
 #define LEFT_MOT        2
@@ -52,6 +52,6 @@ void operatorControl();
 i8 get_axis(u8 axis);
 i8 safe_add_i8(i8 a, i8 b);
 
-void register_button(u8 button, void (*function)());
+void register_button(u8 buttonGroup, u8 button, void (*function)());
 
 #endif
