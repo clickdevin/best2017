@@ -26,14 +26,19 @@ SOFTWARE.
 #include <API.h>
 
 #define FIRE_BTN        5, JOY_DOWN
+#define SLOW_MODE_BTN   6, JOY_DOWN
+#define ARM_UP_BTN      6, JOY_UP
+#define ARM_DOWN_BTN    5, JOY_UP
 #define TURN_AXIS       1
 #define FWD_AXIS        3
 #define LEFT_MOT        2
 #define RIGHT_MOT       3
 #define FIRE_MOT_1      4
 #define FIRE_MOT_2      5
+#define ARM_SERVO_1     7
+#define ARM_SERVO_2     8
 #define DEADZONE        15
-#define BTN_DELAY       100
+#define BTN_DELAY       300
 
 typedef bool            b8;
 typedef unsigned char   u8;
