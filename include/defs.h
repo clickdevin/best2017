@@ -33,7 +33,7 @@ SOFTWARE.
 #define FIRE_MOT_1      4
 #define FIRE_MOT_2      5
 #define DEADZONE        15
-#define BTN_DELAY       20
+#define BTN_DELAY       100
 
 typedef bool            b8;
 typedef unsigned char   u8;

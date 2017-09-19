@@ -38,6 +38,9 @@ void operatorControl()
 {
     i8 l_spd;
     i8 r_spd;
+
+    register_button(FIRE_BTN, &fire_btn);
+
     while (true)
     {
         l_spd = (r_spd = get_axis(FWD_AXIS));
@@ -47,7 +50,5 @@ void operatorControl()
 
         motorSet(LEFT_MOT, l_spd);
         motorSet(RIGHT_MOT, r_spd);
-
-        register_button(FIRE_BTN, &fire_btn);
     }
 }

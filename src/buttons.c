@@ -32,10 +32,13 @@ typedef struct
 void button_listener(void *params_void)
 {
     bl_params_t *params = (bl_params_t *)params_void;
-    if (joystickGetDigital(1, params->buttonGroup, params->button))
+    while (1)
     {
-        params->function();
-        taskDelay(BTN_DELAY);
+        if (joystickGetDigital(1, params->buttonGroup, params->button))
+        {
+            params->function();
+            taskDelay(BTN_DELAY);
+        }
     }
 }
 
