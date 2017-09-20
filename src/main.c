@@ -22,6 +22,8 @@ SOFTWARE.
 
 #include <defs.h>
 
+b8 slow_mode = false;
+
 static void fire_btn()
 {
     if (motorGet(FIRE_MOT_1) == 127)
@@ -34,12 +36,37 @@ static void fire_btn()
     }
 }
 
+static void slow_mode_btn()
+{
+    slow_mode = !slow_mode;
+}
+
+static void arm_up_btn()
+{
+    i8 newval = safe_add_i8(motorGet(ARM_SERVO_1), 16);
+    motorSet(ARM_SERVO_1, newval);
+    motorSet(ARM_SERVO_2, -1 * newval);
+}
+
+static void arm_down_btn()
+{
+    i8 newval = safe_add_i8(motorGet(ARM_SERVO_1), -16);
+    motorSet(ARM_SERVO_1, newval);
+    motorSet(ARM_SERVO_2, -1 * newval);
+}
+
 void operatorControl()
 {
     i8 l_spd;
     i8 r_spd;
 
-    register_button(FIRE_BTN, &fire_btn);
+    motorSet(ARM_SERVO_1, -127);
+    motorSet(ARM_SERVO_2, 127);
+
+    register_button(FIRE_BTN, fire_btn);
+    register_button(SLOW_MODE_BTN, slow_mode_btn);
+    register_button(ARM_UP_BTN, arm_up_btn);
+    register_button(ARM_UP_BTN, arm_down_btn);
 
     while (true)
     {
@@ -47,6 +74,12 @@ void operatorControl()
 
         l_spd = safe_add_i8(l_spd, get_axis(TURN_AXIS));
         r_spd = safe_add_i8(r_spd, -1 * get_axis(TURN_AXIS));
+
+        if (slow_mode)
+        {
+            l_spd /= 4;
+            r_spd /= 4;
+        }
 
         motorSet(LEFT_MOT, l_spd);
         motorSet(RIGHT_MOT, r_spd);

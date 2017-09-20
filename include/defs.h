@@ -38,7 +38,7 @@ SOFTWARE.
 #define ARM_SERVO_1     7
 #define ARM_SERVO_2     8
 #define DEADZONE        15
-#define BTN_DELAY       300
+#define BTN_DELAY       250
 
 typedef bool            b8;
 typedef unsigned char   u8;
