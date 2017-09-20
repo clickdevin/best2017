@@ -20,8 +20,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef DEFS_H
+#define DEFS_H
 
 #include <API.h>
 

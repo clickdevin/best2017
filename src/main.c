@@ -22,7 +22,7 @@ SOFTWARE.
 
 #include <defs.h>
 
-void fire_btn()
+static void fire_btn()
 {
     if (motorGet(FIRE_MOT_1) == 127)
     {
