@@ -38,8 +38,8 @@ SOFTWARE.
 #define RIGHT_MOT       3
 #define FIRE_MOT_1      4
 #define FIRE_MOT_2      5
-#define ARM_SERVO_1     7
-#define ARM_SERVO_2     8
+#define ARM_SERVO_1     6
+#define ARM_SERVO_2     7
 #define DEADZONE        20
 #define BTN_DELAY       250
 

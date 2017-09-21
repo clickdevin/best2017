@@ -65,8 +65,8 @@ void register_button(u8 buttonGroup, u8 button, void (*function)())
     params->buttonGroup = buttonGroup;
     params->button = button;
     params->function = function;
-    /* Lastly, we create a new thread and pass a pointer
-    to the struct we made at the beginning to it. */
+    /* Lastly, we create a new thread and
+    pass a pointer to the struct to it. */
     taskCreate(
         button_listener,
         TASK_DEFAULT_STACK_SIZE,
