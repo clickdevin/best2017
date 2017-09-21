@@ -22,7 +22,11 @@ SOFTWARE.
 
 #include <defs.h>
 
+/* A variable for a toggle switch used later. */
 b8 slow_mode = false;
+
+/* These static functions ending in _btn are used
+as callbacks for our button-handling system. */
 
 static void fire_btn()
 {
@@ -55,32 +59,41 @@ static void arm_down_btn()
     motorSet(ARM_SERVO_2, -1 * newval);
 }
 
+/* Beginning of the main part of the program */
 void operatorControl()
 {
+    /* We need to assign and manipulate these variables at little later. */
     i8 l_spd;
     i8 r_spd;
 
+    /* Make sure the servos are in their initial positions. */
     motorSet(ARM_SERVO_1, -127);
     motorSet(ARM_SERVO_2, 127);
 
+    /* Register the static functions above to our button system. */
     register_button(FIRE_BTN, fire_btn);
     register_button(SLOW_MODE_BTN, slow_mode_btn);
     register_button(ARM_UP_BTN, arm_up_btn);
     register_button(ARM_UP_BTN, arm_down_btn);
 
+    /* Enter an infinite loop. */
     while (true)
     {
+        /* Set l_spd and r_spd to the forward joystick speed. */
         l_spd = (r_spd = get_axis(FWD_AXIS));
 
+        /* Account for turning. */
         l_spd = safe_add_i8(l_spd, get_axis(TURN_AXIS));
         r_spd = safe_add_i8(r_spd, -1 * get_axis(TURN_AXIS));
 
+        /* If slow mode is activated, make everything 3 times slower. */
         if (slow_mode)
         {
-            l_spd /= 4;
-            r_spd /= 4;
+            l_spd /= 3;
+            r_spd /= 3;
         }
 
+        /* Set the motors to l_spd and r_spd. */
         motorSet(LEFT_MOT, l_spd);
         motorSet(RIGHT_MOT, r_spd);
     }

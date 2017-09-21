@@ -20,17 +20,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+/* This file has miscellaneous functions that are needed elsewhere. */
+
 #include <defs.h>
 
+/* This routine returns the position of
+a joystick axis that accounts for deadzone. */
 i8 get_axis(u8 axis)
 {
     i8 value = joystickGetAnalog(1, axis);
     return abs(value) <= DEADZONE ? 0 : value;
 }
 
+/* A routine to add two 8-bit signed integers
+together without causing overflows/underflows. */
 i8 safe_add_i8(i8 a, i8 b)
 {
-    i32 temp = a + b;
+    i16 temp = a + b;
     if (temp >= 127) return 127;
     if (temp <= -127) return -127;
     return (i8)temp;

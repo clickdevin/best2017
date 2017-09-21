@@ -20,11 +20,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+/* This file provides shared defintions for all the other files. */
+
 #ifndef DEFS_H
 #define DEFS_H
 
 #include <API.h>
 
+/* Configuration. */
 #define FIRE_BTN        5, JOY_DOWN
 #define SLOW_MODE_BTN   6, JOY_DOWN
 #define ARM_UP_BTN      6, JOY_UP
@@ -40,6 +43,7 @@ SOFTWARE.
 #define DEADZONE        20
 #define BTN_DELAY       250
 
+/* Typedefs for convenience. */
 typedef bool            b8;
 typedef unsigned char   u8;
 typedef signed char     i8;
@@ -49,14 +53,18 @@ typedef unsigned long   u32;
 typedef signed long     i32;
 typedef float           f32;
 
+/* Declarations for PROS's main functions
+(we only actually define one of these). */
 void autonomous();
 void initializeIO();
 void initialize();
 void operatorControl();
 
+/* Declarations for our misc. functions */
 i8 get_axis(u8 axis);
 i8 safe_add_i8(i8 a, i8 b);
 
+/* Declaration for the function that our button system provides. */
 void register_button(u8 buttonGroup, u8 button, void (*function)());
 
 #endif
