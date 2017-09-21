@@ -30,8 +30,8 @@ i8 get_axis(u8 axis)
 
 i8 safe_add_i8(i8 a, i8 b)
 {
-    i16 temp = a + b;
-    if (a >= 127) return 127;
-    if (a <= -127) return 127;
+    i32 temp = a + b;
+    if (temp >= 127) return 127;
+    if (temp <= -127) return -127;
     return (i8)temp;
 }

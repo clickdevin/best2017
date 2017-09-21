@@ -37,7 +37,7 @@ SOFTWARE.
 #define FIRE_MOT_2      5
 #define ARM_SERVO_1     7
 #define ARM_SERVO_2     8
-#define DEADZONE        15
+#define DEADZONE        20
 #define BTN_DELAY       250
 
 typedef bool            b8;
