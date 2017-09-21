@@ -24,7 +24,7 @@ SOFTWARE.
 
 #include <defs.h>
 
-/* This routine returns the position of
+/* This function returns the position of
 a joystick axis that accounts for deadzone. */
 i8 get_axis(u8 axis)
 {
@@ -32,7 +32,7 @@ i8 get_axis(u8 axis)
     return abs(value) <= DEADZONE ? 0 : value;
 }
 
-/* A routine to add two 8-bit signed integers
+/* A function to add two 8-bit signed integers
 together without causing overflows/underflows. */
 i8 safe_add_i8(i8 a, i8 b)
 {

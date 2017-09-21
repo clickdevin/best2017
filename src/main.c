@@ -65,6 +65,7 @@ void operatorControl()
     /* We need to assign and manipulate these variables at little later. */
     i8 l_spd;
     i8 r_spd;
+    i8 speed_mod;
 
     /* Make sure the servos are in their initial positions. */
     motorSet(ARM_SERVO_1, -127);
@@ -83,8 +84,10 @@ void operatorControl()
         l_spd = (r_spd = get_axis(FWD_AXIS));
 
         /* Account for turning. */
-        l_spd = safe_add_i8(l_spd, get_axis(TURN_AXIS));
-        r_spd = safe_add_i8(r_spd, -1 * get_axis(TURN_AXIS));
+        speed_mod = get_axis(TURN_AXIS);
+        if (get_axis(FWD_AXIS) != 0) speed_mod *= 0.8;
+        l_spd = safe_add_i8(l_spd, speed_mod);
+        r_spd = safe_add_i8(r_spd, -1 * speed_mod);
 
         /* If slow mode is activated, make everything 3 times slower. */
         if (slow_mode)
