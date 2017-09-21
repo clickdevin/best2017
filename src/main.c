@@ -81,8 +81,6 @@ void operatorControl()
             r_spd /= 4;
         }
 
-        printf("L: %.3d; R: %.3d\r", l_spd, r_spd);
-
         motorSet(LEFT_MOT, l_spd);
         motorSet(RIGHT_MOT, r_spd);
     }
