@@ -45,20 +45,6 @@ static void slow_mode_btn()
     slow_mode = !slow_mode;
 }
 
-static void arm_up_btn()
-{
-    i8 newval = safe_add_i8(motorGet(ARM_SERVO_1), 16);
-    motorSet(ARM_SERVO_1, newval);
-    motorSet(ARM_SERVO_2, -1 * newval);
-}
-
-static void arm_down_btn()
-{
-    i8 newval = safe_add_i8(motorGet(ARM_SERVO_1), -16);
-    motorSet(ARM_SERVO_1, newval);
-    motorSet(ARM_SERVO_2, -1 * newval);
-}
-
 /* Beginning of the main part of the program */
 void operatorControl()
 {
@@ -67,15 +53,9 @@ void operatorControl()
     i8 r_spd;
     i8 speed_mod;
 
-    /* Make sure the servos are in their initial positions. */
-    motorSet(ARM_SERVO_1, -127);
-    motorSet(ARM_SERVO_2, 127);
-
     /* Register the static functions above to our button system. */
     register_button(FIRE_BTN, fire_btn);
     register_button(SLOW_MODE_BTN, slow_mode_btn);
-    register_button(ARM_UP_BTN, arm_up_btn);
-    register_button(ARM_UP_BTN, arm_down_btn);
 
     /* Enter an infinite loop. */
     while (true)
@@ -99,5 +79,10 @@ void operatorControl()
         /* Set the motors to l_spd and r_spd. */
         motorSet(LEFT_MOT, l_spd);
         motorSet(RIGHT_MOT, r_spd);
+
+        /* Arm motor control */
+        if (joystickGetDigital(1, ARM_DOWN_BTN)) motorSet(ARM_MOT, -32);
+        else if (joystickGetDigital(1, ARM_UP_BTN)) motorSet(ARM_MOT, 48);
+        else motorSet(ARM_MOT, 0);
     }
 }
