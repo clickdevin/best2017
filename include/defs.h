@@ -28,16 +28,15 @@ SOFTWARE.
 #include <API.h>
 
 /* Configuration. */
-#define FIRE_BTN        5, JOY_DOWN
-#define SLOW_MODE_BTN   6, JOY_DOWN
+#define FIRE_BTN        7, JOY_LEFT
+#define SLOW_MODE_BTN   5, JOY_DOWN
 #define ARM_UP_BTN      6, JOY_UP
-#define ARM_DOWN_BTN    5, JOY_UP
+#define ARM_DOWN_BTN    6, JOY_DOWN
 #define TURN_AXIS       1
 #define FWD_AXIS        3
 #define LEFT_MOT        2
 #define RIGHT_MOT       3
-#define FIRE_MOT_1      4
-#define FIRE_MOT_2      5
+#define FIRE_MOT        4
 #define ARM_MOT         6
 #define DEADZONE        20
 #define BTN_DELAY       250

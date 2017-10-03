@@ -30,14 +30,9 @@ as callbacks for our button-handling system. */
 
 static void fire_btn()
 {
-    if (motorGet(FIRE_MOT_1) == 127)
-    {
-        motorSet(FIRE_MOT_1, 0);
-        motorSet(FIRE_MOT_2, 0);
-    } else {
-        motorSet(FIRE_MOT_1, 127);
-        motorSet(FIRE_MOT_2, 127);
-    }
+    if (motorGet(FIRE_MOT) == 127)
+        motorSet(FIRE_MOT, 0);
+    else motorSet(FIRE_MOT, 127);
 }
 
 static void slow_mode_btn()
@@ -62,27 +57,44 @@ void operatorControl()
     {
         /* Set l_spd and r_spd to the forward joystick speed. */
         l_spd = (r_spd = get_axis(FWD_AXIS));
+        if (get_axis(FWD_AXIS) < 0)
+        {
+            l_spd /= 3;
+            r_spd /= 3;
+        } else {
+            l_spd /= 2;
+            r_spd /= 2;
+        }
 
         /* Account for turning. */
         speed_mod = get_axis(TURN_AXIS);
-        if (get_axis(FWD_AXIS) != 0) speed_mod *= 0.8;
+        if (get_axis(FWD_AXIS) == 0) speed_mod /= 3;
+        else speed_mod /= 2;
         l_spd = safe_add_i8(l_spd, speed_mod);
         r_spd = safe_add_i8(r_spd, -1 * speed_mod);
 
         /* If slow mode is activated, make everything 3 times slower. */
-        if (slow_mode)
+        if (slow_mode && get_axis(FWD_AXIS) >= 0)
         {
             l_spd /= 3;
             r_spd /= 3;
         }
 
+        /* Arm motor control */
+        if (joystickGetDigital(1, ARM_DOWN_BTN))
+        {
+            motorSet(ARM_MOT, -32);
+            l_spd = safe_add_i8(l_spd, -22);
+            r_spd = safe_add_i8(r_spd, -22);
+        } else if (joystickGetDigital(1, ARM_UP_BTN)) {
+            motorSet(ARM_MOT, 48);
+            l_spd = safe_add_i8(l_spd, 22);
+            r_spd = safe_add_i8(r_spd, 22);
+        }
+        else motorSet(ARM_MOT, 0);
+
         /* Set the motors to l_spd and r_spd. */
         motorSet(LEFT_MOT, l_spd);
         motorSet(RIGHT_MOT, r_spd);
-
-        /* Arm motor control */
-        if (joystickGetDigital(1, ARM_DOWN_BTN)) motorSet(ARM_MOT, -32);
-        else if (joystickGetDigital(1, ARM_UP_BTN)) motorSet(ARM_MOT, 48);
-        else motorSet(ARM_MOT, 0);
     }
 }
