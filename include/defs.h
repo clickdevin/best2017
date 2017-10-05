@@ -29,7 +29,8 @@ SOFTWARE.
 
 /* Configuration. */
 #define FIRE_BTN        7, JOY_LEFT
-#define SLOW_MODE_BTN   5, JOY_DOWN
+#define FAST_MODE_BTN   5, JOY_DOWN
+#define ARM_MOVE_BTN    5, JOY_UP
 #define ARM_UP_BTN      6, JOY_UP
 #define ARM_DOWN_BTN    6, JOY_DOWN
 #define TURN_AXIS       1
@@ -37,7 +38,7 @@ SOFTWARE.
 #define LEFT_MOT        2
 #define RIGHT_MOT       3
 #define FIRE_MOT        4
-#define ARM_MOT         6
+#define ARM_MOT         5
 #define DEADZONE        20
 #define BTN_DELAY       250
 

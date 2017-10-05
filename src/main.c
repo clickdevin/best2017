@@ -22,8 +22,9 @@ SOFTWARE.
 
 #include <defs.h>
 
-/* A variable for a toggle switch used later. */
-b8 slow_mode = false;
+/* Toggle variables */
+b8 fast_mode    = false;
+b8 arm_move     = true;
 
 /* These static functions ending in _btn are used
 as callbacks for our button-handling system. */
@@ -35,9 +36,14 @@ static void fire_btn()
     else motorSet(FIRE_MOT, 127);
 }
 
-static void slow_mode_btn()
+static void fast_mode_btn()
 {
-    slow_mode = !slow_mode;
+    fast_mode = !fast_mode;
+}
+
+static void arm_move_btn()
+{
+    arm_move = !arm_move;
 }
 
 /* Beginning of the main part of the program */
@@ -46,55 +52,55 @@ void operatorControl()
     /* We need to assign and manipulate these variables at little later. */
     i8 l_spd;
     i8 r_spd;
+    i8 a_spd;
     i8 speed_mod;
 
     /* Register the static functions above to our button system. */
     register_button(FIRE_BTN, fire_btn);
-    register_button(SLOW_MODE_BTN, slow_mode_btn);
+    register_button(FAST_MODE_BTN, fast_mode_btn);
+    register_button(ARM_MOVE_BTN, arm_move_btn);
 
     /* Enter an infinite loop. */
     while (true)
     {
         /* Set l_spd and r_spd to the forward joystick speed. */
         l_spd = (r_spd = get_axis(FWD_AXIS));
-        if (get_axis(FWD_AXIS) < 0)
-        {
-            l_spd /= 3;
-            r_spd /= 3;
-        } else {
-            l_spd /= 2;
-            r_spd /= 2;
-        }
 
         /* Account for turning. */
         speed_mod = get_axis(TURN_AXIS);
-        if (get_axis(FWD_AXIS) == 0) speed_mod /= 3;
-        else speed_mod /= 2;
-        l_spd = safe_add_i8(l_spd, speed_mod);
-        r_spd = safe_add_i8(r_spd, -1 * speed_mod);
-
-        /* If slow mode is activated, make everything 3 times slower. */
-        if (slow_mode && get_axis(FWD_AXIS) >= 0)
-        {
-            l_spd /= 3;
-            r_spd /= 3;
-        }
+        l_spd = safe_add_i8(l_spd, 0.6 * speed_mod);
+        r_spd = safe_add_i8(r_spd, -0.6 * speed_mod);
 
         /* Arm motor control */
         if (joystickGetDigital(1, ARM_DOWN_BTN))
         {
-            motorSet(ARM_MOT, -32);
-            l_spd = safe_add_i8(l_spd, -22);
-            r_spd = safe_add_i8(r_spd, -22);
+            a_spd = 127;
+            l_spd = arm_move ? safe_add_i8(l_spd, -44): 0;
+            r_spd = arm_move ? safe_add_i8(r_spd, -44): 0;
         } else if (joystickGetDigital(1, ARM_UP_BTN)) {
-            motorSet(ARM_MOT, 48);
-            l_spd = safe_add_i8(l_spd, 22);
-            r_spd = safe_add_i8(r_spd, 22);
+            a_spd = -127;
+            l_spd = arm_move ? safe_add_i8(l_spd, 44): 0;
+            r_spd = arm_move ? safe_add_i8(r_spd, 44): 0;
         }
-        else motorSet(ARM_MOT, 0);
+        else a_spd = 0;
+
+        /* If we aren't in fast mode, reduce speeds. */
+        if (!fast_mode)
+        {
+            if (get_axis(FWD_AXIS) < 0)
+            {
+                l_spd /= 3;
+                r_spd /= 3;
+            } else {
+                l_spd /= 2;
+                r_spd /= 2;
+            }
+            a_spd /= 2;
+        }
 
         /* Set the motors to l_spd and r_spd. */
         motorSet(LEFT_MOT, l_spd);
         motorSet(RIGHT_MOT, r_spd);
+        motorSet(ARM_MOT, a_spd);
     }
 }
