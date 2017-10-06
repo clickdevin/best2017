@@ -87,6 +87,7 @@ void operatorControl()
         /* If we aren't in fast mode, reduce speeds. */
         if (!fast_mode)
         {
+            a_spd /= 2;
             if (get_axis(FWD_AXIS) < 0)
             {
                 l_spd /= 3;
@@ -95,7 +96,6 @@ void operatorControl()
                 l_spd /= 2;
                 r_spd /= 2;
             }
-            a_spd /= 2;
         }
 
         /* Set the motors to l_spd and r_spd. */
