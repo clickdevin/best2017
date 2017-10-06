@@ -67,9 +67,9 @@ void operatorControl()
         l_spd = (r_spd = get_axis(FWD_AXIS));
 
         /* Account for turning. */
-        speed_mod = get_axis(TURN_AXIS);
-        l_spd = safe_add_i8(l_spd, 0.6 * speed_mod);
-        r_spd = safe_add_i8(r_spd, -0.6 * speed_mod);
+        speed_mod = 0.6 * get_axis(TURN_AXIS);
+        l_spd = safe_add_i8(l_spd, speed_mod);
+        r_spd = safe_add_i8(r_spd, -1 * speed_mod);
 
         /* Arm motor control */
         if (joystickGetDigital(1, ARM_DOWN_BTN))
