@@ -33,6 +33,7 @@ SOFTWARE.
 #define ARM_MOVE_BTN    5, JOY_UP
 #define ARM_UP_BTN      6, JOY_UP
 #define ARM_DOWN_BTN    6, JOY_DOWN
+#define LIM_SWTCH       12
 #define TURN_AXIS       1
 #define FWD_AXIS        3
 #define LEFT_MOT        2
