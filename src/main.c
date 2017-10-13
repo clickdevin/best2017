@@ -29,11 +29,14 @@ b8 arm_move     = true;
 /* These static functions ending in _btn are used
 as callbacks for our button-handling system. */
 
-static void fire_btn()
+static void fire_rel_btn()
 {
-    if (motorGet(FIRE_MOT) == 127)
-        motorSet(FIRE_MOT, 0);
-    else motorSet(FIRE_MOT, 127);
+    motorSet(FIRE_SERVO, 127);
+}
+
+static void fire_lock_btn()
+{
+    motorSet(FIRE_SERVO, 31);
 }
 
 static void fast_mode_btn()
@@ -61,7 +64,8 @@ void operatorControl()
     i8 speed_mod;
 
     /* Register the static functions above to our button system. */
-    register_button(FIRE_BTN, fire_btn);
+    register_button(FIRE_REL_BTN, fire_rel_btn);
+    register_button(FIRE_LOCK_BTN, fire_lock_btn);
     register_button(FAST_MODE_BTN, fast_mode_btn);
     register_button(ARM_MOVE_BTN, arm_move_btn);
 
