@@ -87,7 +87,9 @@ void operatorControl()
             a_spd = 127;
             l_spd = arm_move ? safe_add_i8(l_spd, -44): 0;
             r_spd = arm_move ? safe_add_i8(r_spd, -44): 0;
-        } else if (joystickGetDigital(1, ARM_UP_BTN) && digitalRead(LIM_SWTCH)) {
+        }
+        else if (joystickGetDigital(1, ARM_UP_BTN) && digitalRead(LIM_SWTCH))
+        {
             a_spd = -127;
             l_spd = arm_move ? safe_add_i8(l_spd, 44): 0;
             r_spd = arm_move ? safe_add_i8(r_spd, 44): 0;
