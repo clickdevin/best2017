@@ -31,12 +31,12 @@ as callbacks for our button-handling system. */
 
 static void fire_rel_btn()
 {
-    motorSet(FIRE_SERVO, 127);
+    motorSet(FIRE_SERVO, 91);
 }
 
 static void fire_lock_btn()
 {
-    motorSet(FIRE_SERVO, 31);
+    motorSet(FIRE_SERVO, -63);
 }
 
 static void fast_mode_btn()
@@ -81,12 +81,11 @@ void operatorControl()
         r_spd = safe_add_i8(r_spd, -1 * speed_mod);
 
         /* Arm motor control */
-        if (digitalRead(LIM_SWTCH)) a_spd = 0;
-        else if (joystickGetDigital(1, ARM_DOWN_BTN)) {
+        if (joystickGetDigital(1, ARM_DOWN_BTN)) {
             a_spd = 127;
             l_spd = arm_move ? safe_add_i8(l_spd, -44): 0;
             r_spd = arm_move ? safe_add_i8(r_spd, -44): 0;
-        } else if (joystickGetDigital(1, ARM_UP_BTN)) {
+        } else if (joystickGetDigital(1, ARM_UP_BTN) && digitalRead(LIM_SWTCH)) {
             a_spd = -127;
             l_spd = arm_move ? safe_add_i8(l_spd, 44): 0;
             r_spd = arm_move ? safe_add_i8(r_spd, 44): 0;
