@@ -49,6 +49,7 @@ static void arm_move_btn()
     arm_move = !arm_move;
 }
 
+/* Configure the limit switch pin */
 void initializeIO()
 {
     pinMode(LIM_SWTCH, INPUT);
