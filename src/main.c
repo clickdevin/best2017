@@ -81,7 +81,8 @@ void operatorControl()
         r_spd = safe_add_i8(r_spd, -1 * speed_mod);
 
         /* Arm motor control */
-        if (joystickGetDigital(1, ARM_DOWN_BTN)) {
+        if (joystickGetDigital(1, ARM_DOWN_BTN))
+        {
             a_spd = 127;
             l_spd = arm_move ? safe_add_i8(l_spd, -44): 0;
             r_spd = arm_move ? safe_add_i8(r_spd, -44): 0;
